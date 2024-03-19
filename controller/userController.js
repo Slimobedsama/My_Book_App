@@ -5,6 +5,29 @@ const generateToken = require('../utils/create');
 // COOKIE EXPIRES IN 2HOURS
 const TIMEOUT = 2 * 60 * 60 * 1000
 
+exports.all = async(req, res, next)=> {
+    try {
+       const allUsers = await User.find().sort({lastName: 'asc'});
+       return res.status(200).json(allUsers)
+    } catch (err) {
+        res.status(500).json({errors: err.message});
+    }
+    next();
+}
+
+exports.single = async(req, res, next)=> {
+    const id = req.params.id;
+    try {
+        const oneUser = await User.findById(id);
+        if(!oneUser) {
+            throw new Error(`The User with id ${id} does not exists.`)
+        }
+        res.status(200).json({ message: `Successful, The User With id ${id} found.`, data: oneUser })
+    } catch (err) {
+        res.status(404).json({error: err.message});
+    }
+}
+
 exports.create = async(req, res, next)=> {
     const {firstName, lastName, email, password} = req.body;
     try {
@@ -23,13 +46,6 @@ exports.create = async(req, res, next)=> {
     }
 }
 
-exports.access = (req, res)=> {
-    res.render('../views/users/login', {title: 'Login'});
-}
-
-exports.sign = (req, res)=> {
-    res.render('../views/users/register', {title: 'Signup'});
-}
 
 exports.signIn = async(req, res, next)=> {
     const { email, password } = req.body;
@@ -52,14 +68,13 @@ exports.signIn = async(req, res, next)=> {
     next();
 }
 
-exports.all = async(req, res, next)=> {
-    try {
-       const allUsers = await User.find().sort({lastName: 'asc'});
-       return res.status(200).json(allUsers)
-    } catch (err) {
-        res.status(500).json({errors: err.message});
-    }
-    next();
+//TEMPLATE RENDERING LOGIC 
+exports.access = (req, res)=> {
+    res.render('../views/users/login', {title: 'Login'});
+}
+
+exports.sign = (req, res)=> {
+    res.render('../views/users/register', {title: 'Signup'});
 }
 
 exports.search = async(req, res, next)=> {
@@ -76,18 +91,6 @@ exports.search = async(req, res, next)=> {
     next();
 }
 
-exports.single = async(req, res, next)=> {
-    const id = req.params.id;
-    try {
-        const oneUser = await User.findById(id);
-        if(!oneUser) {
-            throw new Error(`The User with id ${id} does not exists.`)
-        }
-        res.status(200).json({ message: `Successful, The User With id ${id} found.`, data: oneUser })
-    } catch (err) {
-        res.status(404).json({error: err.message});
-    }
-}
 
 exports.edit = async(req, res)=> {
     const id = req.params.id;
