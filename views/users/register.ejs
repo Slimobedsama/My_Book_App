@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('../partials/head') %>
+<body>
+    <%- include('../partials/nav') %>
+    
+    <form action="/api/users/signup" method="post">
+        <h2>Signup</h2>
+        <div>
+            <div class="firstname-error error"></div>
+            <input type="text" name="firstName" id="f-name" placeholder="First Name">
+        </div>
+        <div>
+            <div class="lastname-error error"></div>
+            <input type="text" name="lastName" id="l-name" placeholder="Last Name">
+        </div>
+        <div>
+            <div class="email-error error"></div>
+            <input type="email" name="email" id="email" placeholder="Email" autocomplete="on">
+        </div>
+        <div>
+            <div class="username-error error"></div>
+            <input type="text" name="userName" id="username" placeholder="Username" autocomplete="on">
+        </div>
+        <div>
+            <div class="phone-error error"></div>
+            <input type="tel" name="mobileNo" id="phone" placeholder="Mobile Number" autocomplete="on">
+        </div>
+        <div>
+            <div class="password-error error"></div>
+            <input type="password" name="password" id="password" placeholder="Password" autocomplete="on">
+        </div>
+        <div>
+            <input type="submit" value="Signup">
+        </div>
+        <div>
+            <h4>Already have an account? <a href="/api/users/login">Login.</a></h4>
+        </div>
+    </form>
+    
+    <script src="/index.js"></script>
+</body>
+</html>

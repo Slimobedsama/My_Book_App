@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<%- include('../partials/head') %>
+</head>
+<body>
+    <%- include('../partials/nav') %>
+    
+    <form action="/api/users/login" method="post" class="form">
+        <h2>Login</h2>
+        <div class="username-error error"></div>
+        <div>
+            <input type="text" name="userName" id="username" placeholder="Username" autocomplete="on">
+        </div>
+        <div class="password-error error"></div>
+        <div>
+            <input type="password" name="password" id="password" placeholder="Password" autocomplete="on">
+        </div>
+        <div>
+            <input type="submit" value="Login">
+        </div>
+        <div>
+            <h4>Already have an account?<a href="/api/users/signup"> Signup.</a></h4>
+        </div>
+    </form>
+    
+    <script src="/log.js"></script>
+</body>
+</html>

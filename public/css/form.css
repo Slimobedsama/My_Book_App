@@ -1,0 +1,49 @@
+form {
+    background-color: #000;
+    margin: 80px auto;
+    max-width: 400px;
+    padding: 40px;
+}
+form, form input {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+form h2 {
+    margin-bottom: 15px;
+    font-size: 28px;
+    color: #fff;
+}
+form input {
+    width: 100%;
+    padding: 8px;
+    margin: 7px auto;
+    font-weight: bold;
+}
+form input[type="submit"] {
+    background-color: #f00909;
+    color: #fff;
+    border-radius: 20px;
+    font-size: 16px;
+}
+form h4 {
+    margin-top: 15px;
+    color: #fff;
+}
+form a {
+    color: #f00909;
+}
+.error {
+    color: #fff;
+    font-size: small;
+    font-weight: 500;
+}
+/* ADDITIONAL STYLES FOR LOGIN PAGE */
+.form {
+    padding: 40px;
+}
+.form h2 {
+    margin-bottom: 25px;
+}
+.form h4 {
+    margin-top: 25px;
+}
