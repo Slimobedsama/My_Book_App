@@ -6,15 +6,13 @@ const generateToken = require('../utils/create');
 const TIMEOUT = 2 * 60 * 60 * 1000
 
 exports.create = async(req, res, next)=> {
-    const {firstName, lastName, email, userName, mobileNo, password} = req.body;
+    const {firstName, lastName, email, password} = req.body;
     try {
         const encryptedPassword = await bcrypt.hash(password, 12);
         const createUser = await User.create({
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             email: req.body.email,
-            userName: req.body.userName,
-            mobileNo: req.body.mobileNo,
             password: encryptedPassword
         });
         const token = generateToken(createUser._id);
@@ -34,25 +32,24 @@ exports.sign = (req, res)=> {
 }
 
 exports.signIn = async(req, res, next)=> {
-    const {userName, mobileNo, password} = req.body;
+    const { email, password } = req.body;
     try {
-        const findUserName = await User.findOne({userName});
-        const findMobileNo = await User.findOne({mobileNo});
-        const loginData = findUserName || findMobileNo;
-        
-        if(loginData) {
-            const isValidPassword = await bcrypt.compare(password, loginData.password);
+        const findEmail = await User.findOne({ email });
+        if(findEmail) {
+            const isValidPassword = await bcrypt.compare(password, findEmail.password);
             if(isValidPassword) {
-                const token = generateToken(loginData._id);
+                const token = generateToken(findEmail._id);
                 res.cookie('jwt', token, {httpOnly: true, maxAge: TIMEOUT});
-                return res.status(200).json({message: 'Login Successful', User: loginData._id});
+                return res.status(200).json({message: 'Login Successful', User: findEmail._id});
             }
-            throw new Error('Incorrect Password');
+            throw  new Error("Invalid Password");
         }
-        throw new Error('Incorrect Username or Mobile Number');
     } catch (err) {
-        next(err);
+        // next(err);
+        console.log(err.message);
+        res.status(400).json({message: err.message})
     }
+    next();
 }
 
 exports.all = async(req, res, next)=> {
