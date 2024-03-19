@@ -14,15 +14,6 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true,
     },
-    userName: {
-        type: String,
-        required: true,
-        unique: true
-    },
-    mobileNo: {
-        type: String,
-        required: true,
-    },
     password: {
         type: String,
         required: true
