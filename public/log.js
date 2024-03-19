@@ -1,7 +1,6 @@
 // QUERYING THE SELECTORS
 const form = document.querySelector('form');
-const usernameError = document.querySelector('.username-error');
-const mobileError = document.querySelector('.phone-error');
+const emailError = document.querySelector('.email-error');
 const passError = document.querySelector('.password-error.error');
 
 // EVENT LISTENER
@@ -9,18 +8,18 @@ form.addEventListener('submit', async(e)=> {
     e.preventDefault();
 
     // const name = mix.value;
-    const userName = form.userName.value;
+    const email = form.email.value;
     const password = form.password.value;
 
     // CLEARS ERROR MESSAGE
-    usernameError.textContent = '';
+    emailError.textContent = '';
     passError.textContent = '';
 
     try {
         const res = await fetch('/api/users/login', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({userName, password})
+            body: JSON.stringify({ email, password })
         })
         const data = await res.json()
         console.log(data.errors)

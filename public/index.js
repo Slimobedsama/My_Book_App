@@ -14,23 +14,19 @@ form.addEventListener('submit', async(e)=> {
     const firstName = form.firstName.value;
     const lastName = form.lastName.value;
     const email = form.email.value;
-    const userName = form.userName.value;
-    const mobileNo = form.mobileNo.value;
     const password = form.password.value;
 
     // CLEARS ERROR MESSAGE
     firstError.textContent = '';
     lastError.textContent = '';
     emailError.textContent = '';
-    usernameError.textContent = '';
-    mobileError.textContent = '';
     passError.textContent = '';
 
     try {
         const res = await fetch('/api/users/signup', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({firstName, lastName, email, userName, mobileNo, password})
+            body: JSON.stringify({firstName, lastName, email, password})
         })
         const data = await res.json()
         // SUCCESSFUL VALIDATION & SIGNUP
@@ -44,10 +40,6 @@ form.addEventListener('submit', async(e)=> {
             lastError.textContent = data.errors;
         } else if(data.errors.includes('Email Address') || data.errors.includes('Already')) {
             emailError.textContent = data.errors;
-        } else if(data.errors.includes('Username') || data.errors.includes('Already Exists')) {
-            usernameError.textContent = data.errors;
-        } else if(data.errors.includes('Mobile')) {
-            mobileError.textContent = data.errors
         } else if(data.errors.includes('Weak Password')) {
             passError.textContent = data.errors
         } 
