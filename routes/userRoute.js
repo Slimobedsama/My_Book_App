@@ -3,13 +3,14 @@ const Router = express.Router();
 const userController = require('../controller/userController');
 const { signupValidation, loginValidation } = require('../validation/userValidate');
 
+// VIEWS ROUTE
 Router.get('/signup', userController.sign); // SIGNUP VIEW IN EJS
-Router.post('/signup', signupValidation, userController.create);
 Router.get('/login', userController.access); // LOGIN VIEW IN EJS
-Router.post('/login', loginValidation, userController.signIn);
+
+// LOGIC ROUTE
 Router.get('/all-users', userController.all);
-Router.get('/search', userController.search);
 Router.get('/:id', userController.single);
-Router.patch('/:id', userController.edit);
+Router.post('/signup', signupValidation, userController.create);
+Router.post('/login', loginValidation, userController.signIn);
 
 module.exports = Router;

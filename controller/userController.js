@@ -68,54 +68,6 @@ exports.signIn = async(req, res, next)=> {
     next();
 }
 
-
-exports.search = async(req, res, next)=> {
-    const { firstName, lastName } = req.query;
-    try {
-        if(firstName) {
-            let findFirstName = await User.find({ firstName });
-            if(findFirstName.length === 0) {
-                throw new Error('Search not found');
-            }
-            return res.status(200).json({ message: 'Success', data: findFirstName });
-        }
-        if(lastName) {
-            let findLastName = await User.find({ lastName });
-            if(findLastName.length === 0) {
-                throw new Error('Search not found');
-            }
-            return res.status(200).json({ message: 'Success', data: findLastName });
-        }
-    } catch (err) {
-        return res.status(400).json({Error: err.message });
-    }
-    next();
-}
-
-
-exports.edit = async(req, res)=> {
-    const id = req.params.id;
-    const {firstName, lastName } = req.body;
-    try {
-        const checkUserName = await User.findOne({userName});
-        if(checkUserName) {
-            throw new Error('Username Already exists');
-        }
-        
-        if(id) {
-            if(firstName || lastName || userName || mobileNo) {
-                const updateInfo = await User.findByIdAndUpdate(id, req.body, {new: true});
-                return res.status(200).json({message: 'Update Successful.', updateInfo});
-            } else {
-                res.status(400).json({errors: 'Only First Name, Last Name, Username & Mobile Number Can be Updated.'})
-            }
-        }
-        
-    } catch (err) {
-        res.status(400).json({errors: `User with id ${id} not found`});
-    }
-}
-
 //TEMPLATE RENDERING LOGIC 
 exports.access = (req, res)=> {
     res.render('../views/users/login', {title: 'Login'});
