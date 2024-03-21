@@ -9,6 +9,7 @@ Router.get('/', bookController.home);
 
 //LOGIC ROUTE
 Router.get('/all-books', bookController.all);
+Router.get('/search', bookController.search);
 Router.get('/:id', authUser, bookController.getOne);
 Router.post('/', validateBook, bookController.create);
 

@@ -37,6 +37,33 @@ exports.getOne = async(req, res, next)=> {
     next();
 }
 
+exports.search = async(req, res)=> {
+    const { author, title, genre } = req.query;
+    try {
+        let searchIndex;
+        if(author) {
+            searchIndex = await Book.find({ author });
+            if(searchIndex.length === 0) {
+                throw new Error('Author not found')
+            }
+        } else if(title) {
+            searchIndex = await Book.find({ title });
+            if(searchIndex.length === 0) {
+                throw new Error('Title not found')
+            }
+        } else if(genre) {
+            searchIndex = await Book.find({ genre });
+            if(searchIndex.length === 0) {
+                throw new Error('Genre not found')
+            }
+        }
+        res.status(200).json({ message: 'Success', data: searchIndex });
+    } catch (err) {
+        console.log(err.message);
+        res.status(404).json({ error: err.message });
+    }
+}
+
 //TEMPLATE RENDERING LOGIC
 exports.home = (req, res)=> {
     res.render('../views/books/index', {title: 'HomePage'});
