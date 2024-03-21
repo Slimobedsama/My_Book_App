@@ -58,7 +58,7 @@ exports.signIn = async(req, res, next)=> {
                 res.cookie('jwt', token, {httpOnly: true, maxAge: TIMEOUT});
                 return res.status(200).json({message: 'Login Successful', User: findEmail._id});
             }
-            throw  new Error("Invalid Password");
+            throw  new Error("Incorrect Password");
         }
     } catch (err) {
         // next(err);

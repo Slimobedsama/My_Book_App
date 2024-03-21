@@ -1,17 +1,6 @@
 const Book = require('../model/booksModel');
 
-exports.all = async(req, res)=> {
-    try {
-        const allBooks = await Book.find().sort({author: 'asc'});
-        return res.status(200).json(allBooks);
-    } catch (err) {
-        return res.status(500).json({errors: err.message});
-    }
-}
 
-exports.home = (req, res)=> {
-    res.render('../views/books/index', {title: 'HomePage'});
-};
 
 exports.create = async(req, res)=> {
     const {author, title, genre, summary, price, releaseYear} = req.body;
@@ -24,20 +13,15 @@ exports.create = async(req, res)=> {
     }
 }
 
-exports.getSearch = async(req, res)=> {
-    const {query} = req.query;
+exports.all = async(req, res)=> {
     try {
-       const book = await Book.findOne({genre: query});
-       if(!book) {
-        return res.json({message: 'Book not found'})
-       }
-       return res.json({message: 'Book found'})
+        const allBooks = await Book.find().sort({author: 'asc'});
+        return res.status(200).json(allBooks);
     } catch (err) {
-        console.log(err.message)
-        res.status(404).json({errors: err.message})
+        return res.status(500).json({errors: err.message});
     }
-    // next();
 }
+
 
 exports.getOne = async(req, res, next)=> {
     const id = req.params.id;
@@ -46,9 +30,14 @@ exports.getOne = async(req, res, next)=> {
         if(!oneBook) {
             throw new Error('Book does not exists')
         }
-        res.status(200).json({message: 'Successful', oneBook});
+        res.status(200).json({message: 'Successful', data: oneBook});
     } catch (err) {
-        res.status(400).json({errors: err.message})
+        res.status(404).json({errors: err.message})
     }
     next();
 }
+
+//TEMPLATE RENDERING LOGIC
+exports.home = (req, res)=> {
+    res.render('../views/books/index', {title: 'HomePage'});
+};

@@ -2,11 +2,14 @@ const express = require('express');
 const Router = express.Router();
 const bookController = require('../controller/bookController');
 const authUser = require('../middleware/authController');
+const validateBook = require( '../validation/bookValidate');
 
-Router.get('/all-books', bookController.all);
+//VIEWS ROUTE
 Router.get('/', bookController.home);
-Router.get('/search', bookController.getSearch);
-Router.get('/:id', authUser, bookController.getOne);
-Router.post('/', bookController.create);
 
-module.exports = Router;
+//LOGIC ROUTE
+Router.get('/all-books', bookController.all);
+Router.get('/:id', authUser, bookController.getOne);
+Router.post('/', validateBook, bookController.create);
+
+module.exports  = Router;
