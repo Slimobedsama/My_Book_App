@@ -66,5 +66,5 @@ exports.search = async(req, res)=> {
 
 //TEMPLATE RENDERING LOGIC
 exports.home = (req, res)=> {
-    res.render('../views/books/index', {title: 'HomePage'});
+    res.render('../views/books/index', {title: 'Landing  Page'});
 };
