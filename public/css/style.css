@@ -69,12 +69,13 @@ li {
     max-width: 100%;
 }
 .msg h2 {
+    text-align: justify;
     font-size: 30px;
     position: absolute;
     top: 23%;
     left: 2%;
-    line-height: 45px;
-    letter-spacing: 3px;
+    /* line-height: 45px; */
+    letter-spacing: 2px;
 }
 .msg span, .extend {
     display: block;
@@ -82,9 +83,9 @@ li {
 .msg a {
     font-size: 18px;
     position: absolute;
-    top: 45%;
+    top: 40%;
     left: 2%;
-    padding: 12px 25px;
+    padding: 10px 20px;
     border-radius: 10px;
     background-color: #f00909;
 }
